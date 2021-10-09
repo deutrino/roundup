@@ -8,7 +8,7 @@ DB_PASS=$(mcookie)
 RT_TRACKER=/var/lib/roundup/tracker
 RT_TEMPLATE=classic
 RT_BACKEND=mysql
-RT_VER=2.0.0
+RT_VER=2.1.0
 RT_CONF=/etc/roundup/tracker-config.ini
 RT_LOCAL=/home/$USER/.local
 
@@ -17,6 +17,10 @@ PY_V=$(python3 --version | sed "s|^.* \(3\.[0-9]\+\).*|\1|")
 adduser --disabled-login --gecos 'roundup user' $USER
 
 su - $USER -c "pip3 install 'roundup==${RT_VER}' --user"
+
+mkdir -p ${RT_LOCAL}/share
+ln -sf ${RT_LOCAL}/lib/python${PY_V}/site-packages/usr/share/doc ${RT_LOCAL}/share/doc
+ln -sf ${RT_LOCAL}/lib/python${PY_V}/site-packages/usr/share/roundup ${RT_LOCAL}/share/roundup
 
 #  set home access perms
 chmod -R 0775 ${RT_LOCAL}
